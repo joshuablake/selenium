@@ -1,9 +1,19 @@
-from django_selenium_clean import SeleniumTestCase
+from django.test import LiveServerTestCase
 
 
-class HomeTest(SeleniumTestCase):
-    def test_selenium_clean(self):
-        from django_selenium_clean import selenium
+class HomeTets(LiveServerTestCase):
+    def load_urls(self, func):
         for i in xrange(5):
-            selenium.get('{}/{}'.format(self.live_server_url, i))
+            try:
+                func('{}/{}'.format(self.live_server_url, i))
+            except Exception as err:
+                print(err)
             print(i)
+
+    def test_selenium(self):
+        from selenium.webdriver.chrome.webdriver import WebDriver
+        selenium = WebDriver()
+        try:
+            self.load_urls(selenium.get)
+        finally:
+            selenium.quit()
