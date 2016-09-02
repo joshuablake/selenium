@@ -31,22 +31,3 @@ class HomeTest(SeleniumTestCase):
         for i in xrange(5):
             selenium.get('{}/{}'.format(self.live_server_url, i))
             print(i)
-
-    def test_selenium(self):
-        from selenium.webdriver.chrome.webdriver import WebDriver
-        selenium = WebDriver()
-        try:
-            for i in xrange(5):
-                selenium.get('{}/{}'.format(self.live_server_url, i))
-                print(i)
-        finally:
-            selenium.quit()
-
-    def test_urllib(self):
-        from urllib2 import urlopen
-        for i in xrange(10):
-            try:
-                urlopen('{}/{}'.format(self.live_server_url, i))
-            except Exception as e:
-                print(e)
-            print(i)
