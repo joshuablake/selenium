@@ -1,23 +1,16 @@
+import socket
+
 from django.test import LiveServerTestCase
+from selenium.webdriver.chrome.webdriver import WebDriver
 
 
 class HomeTets(LiveServerTestCase):
-    def load_urls(self, func):
-        for i in xrange(5):
-            print(i)
-            print('requesting')
-            try:
-                func('{}/{}'.format(self.live_server_url, i))
-            except Exception as err:
-                print(err)
-            print('returned')
-
     def test_selenium(self):
-        from selenium.webdriver.chrome.webdriver import WebDriver
+        socket.setdefaulttimeout(5)
         selenium = WebDriver()
-        selenium.implicitly_wait(1000)
-        selenium.set_page_load_timeout(1000)
         try:
-            self.load_urls(selenium.get)
+            for i in xrange(5):
+                print('Requesting {}'.format(i))
+                selenium.get('{}/{}'.format(self.live_server_url, i))
         finally:
             selenium.quit()
